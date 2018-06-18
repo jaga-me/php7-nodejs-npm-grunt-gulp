@@ -3,12 +3,15 @@ MAINTAINER e.marchenkov@richbrains.net
 
 USER root
 RUN apt-get --yes --force-yes update \
-    && apt-get install --yes --force-yes curl \
-    && echo "deb http://packages.dotdeb.org jessie all" > /etc/apt/sources.list.d/dotdeb.list \
-    && curl -sS https://www.dotdeb.org/dotdeb.gpg | apt-key add - \
+    && apt-get install --yes --force-yes wget curl apt-transport-https lsb-release ca-certificates \
+    && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
+    && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list \
     && apt-get update -qq -y \
-    && apt-get --yes --force-yes install php7.0-cli php7.0-apcu php7.0-apcu-bc php7.0-curl php7.0-json php7.0-mcrypt php7.0-opcache php7.0-readline php7.0-mysql php7.0-xml php7.0-zip php7.0-mbstring php7.0-gd php7.0-intl \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    && apt-get --yes --force-yes install php7.2-cli php7.2-fpm php7.2-apcu php7.2-apcu-bc php7.2-curl php7.2-json php7.2-intl php7.2-opcache php7.2-readline php7.2-mysql php7.2-xml php7.2-zip \
+    && apt-get --yes --force-yes install git nodejs npm \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
