@@ -17,4 +17,5 @@ RUN apt-get --yes --force-yes update \
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
   apt-get install -y nodejs git &&\
   npm install -g bower &&\
-  npm install -g grunt
+  npm install -g grunt &&\
+  npm install -g gulp
