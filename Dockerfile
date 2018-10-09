@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER e.marchenkov@richbrains.net
+MAINTAINER developer@jaga-me.com
 
 USER root
 RUN apt-get --yes --force-yes update \
